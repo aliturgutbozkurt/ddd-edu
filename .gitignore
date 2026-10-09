@@ -1,0 +1,37 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE & Editors
+.idea/
+*.iml
+.vscode/
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+bin/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Temporary / Scratch files
+*.tmp
+*.bak
+scratch/
+
+# Node / PDF build artifacts
+node_modules/
+dist/
+build/
+*.pdf.tmp

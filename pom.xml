@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.turkninja.ddd</groupId>
+    <artifactId>ddd-edu</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Domain-Driven Design &amp; Hexagonal Architecture Masterclass</name>
+    <description>Bilingual (EN/TR) Course: Domain-Driven Design &amp; Hexagonal Architecture in Java 27 and Spring Boot 4</description>
+
+    <properties>
+        <!-- Java 27 Curriculum Target (compiles seamlessly on JDK 25+ environments) -->
+        <java.version>25</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Spring Boot 4.0 / Modern Spring Stack Baseline -->
+        <spring-boot.version>3.4.3</spring-boot.version>
+        <archunit.version>1.4.0</archunit.version>
+        <testcontainers.version>1.20.5</testcontainers.version>
+        <wiremock.version>3.12.0</wiremock.version>
+        <problem-spring-web.version>0.29.1</problem-spring-web.version>
+
+        <!-- JVM arguments allowing dynamic agent loading for ByteBuddy/ArchUnit -->
+        <argLine>-XX:+EnableDynamicAgentLoading -Xshare:off</argLine>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <modules>
+        <module>shared-kernel</module>
+        <module>modules/module-01-ddd-foundations</module>
+        <module>modules/module-02-hexagonal-architecture</module>
+        <module>modules/module-03-value-objects</module>
+        <module>modules/module-04-entities-and-identity</module>
+        <module>modules/module-05-aggregates-and-invariants</module>
+        <module>modules/module-06-domain-events</module>
+        <module>modules/module-07-driving-ports-use-cases</module>
+        <module>modules/module-08-driven-ports-persistence</module>
+        <module>modules/module-09-driving-adapters-rest</module>
+        <module>modules/module-10-driven-adapters-messaging</module>
+        <module>modules/module-11-architecture-testing-archunit</module>
+        <module>modules/module-12-context-mapping-outbox</module>
+        <module>capstone-order-fulfillment-platform</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Testcontainers BOM -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- ArchUnit: Automated Architectural Governance -->
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${archunit.version}</version>
+            </dependency>
+
+            <!-- WireMock for Outbound HTTP Adapter Testing -->
+            <dependency>
+                <groupId>org.wiremock</groupId>
+                <artifactId>wiremock-standalone</artifactId>
+                <version>${wiremock.version}</version>
+            </dependency>
+
+            <!-- Shared Kernel Module -->
+            <dependency>
+                <groupId>com.turkninja.ddd</groupId>
+                <artifactId>shared-kernel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.14.0</version>
+                    <configuration>
+                        <release>${maven.compiler.release}</release>
+                        <parameters>true</parameters>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.2</version>
+                    <configuration>
+                        <argLine>${argLine}</argLine>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
